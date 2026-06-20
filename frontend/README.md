@@ -1,120 +1,119 @@
 # ID Wallet — Frontend
 
-Aplicação web para a carteira de identidade digital de intérpretes profissionais.
-A interface permite ao intérprete consultar seu perfil verificado, gerenciar
-credenciais profissionais, acompanhar o histórico de trabalhos e conversar com um
-assistente de IA — tudo com suporte offline através de PWA.
+Web application for the ID Wallet, a digital identity wallet for professional
+interpreters. The interface lets the interpreter view their verified profile,
+manage professional credentials, track their work history, and chat with an AI
+assistant — all with offline support through a PWA.
 
-O conceito é inspirado na carteira de identidade digital europeia (EU eIDAS 2.0):
-credenciais emitidas por entidades confiáveis, com níveis de confiança e validade,
-apresentadas de forma centralizada e portátil.
+The concept is inspired by the European digital identity wallet (EU eIDAS 2.0):
+credentials issued by trusted authorities, with trust levels and validity periods,
+presented in a single, portable place.
 
 ## Stack
 
-- **React 19** com **TypeScript**
-- **Vite** como bundler e servidor de desenvolvimento
-- **Tailwind CSS 4** para estilização
-- **React Router** para navegação
-- **Zustand** para estado global (conversa do assistente)
-- **Axios** para chamadas REST
-- **vite-plugin-pwa** (Workbox) para instalação e funcionamento offline
+- **React 19** with **TypeScript**
+- **Vite** as the bundler and development server
+- **Tailwind CSS 4** for styling
+- **React Router** for navigation
+- **Zustand** for global state (the assistant conversation)
+- **Axios** for REST requests
+- **vite-plugin-pwa** (Workbox) for installability and offline support
 
-## Pré-requisitos
+## Prerequisites
 
-- Node.js 20 ou superior
+- Node.js 20 or higher
 - npm
-- O backend em execução (a aplicação consome a API em `/api`, redirecionada por
-  proxy para `http://localhost:3333`)
+- The backend running (the app consumes the API at `/api`, proxied to
+  `http://localhost:3333`)
 
-## Como executar
+## Getting started
 
-Instale as dependências:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Inicie o servidor de desenvolvimento:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-A aplicação fica disponível em `http://localhost:5173`. As requisições para `/api`
-são encaminhadas automaticamente para o backend em `http://localhost:3333`.
+The app is available at `http://localhost:5173`. Requests to `/api` are
+automatically proxied to the backend at `http://localhost:3333`.
 
-## Scripts disponíveis
+## Available scripts
 
-| Comando           | Descrição                                              |
+| Command           | Description                                            |
 | ----------------- | ------------------------------------------------------ |
-| `npm run dev`     | Servidor de desenvolvimento com HMR                    |
-| `npm run build`   | Verificação de tipos (`tsc -b`) e build de produção    |
-| `npm run preview` | Servidor local para inspecionar o build de produção    |
-| `npm run lint`    | Análise estática com ESLint                            |
+| `npm run dev`     | Development server with HMR                             |
+| `npm run build`   | Type check (`tsc -b`) and production build             |
+| `npm run preview` | Local server to inspect the production build           |
+| `npm run lint`    | Static analysis with ESLint                            |
 
-## Estrutura do projeto
+## Project structure
 
 ```
 src/
-├── components/      Componentes de interface
-│   ├── Screens/     Telas principais (Dashboard, Wallet, AI)
-│   ├── Sections/    Blocos de conteúdo (listas, chat, menu lateral)
-│   ├── Cards/       Cartões de credencial, trabalho e carteira
-│   ├── Modal/       Janelas modais (perfil, credencial, histórico)
-│   ├── Pages/       Estrutura de layout (header, conteúdo, banners)
-│   ├── Buttons/     Ações isoladas (tema, conexão, avatar)
-│   ├── Icons/       Ícones em SVG como componentes React
-│   └── ui/          Primitivos reutilizáveis (Button, Card, Modal, etc.)
-├── context/         Contextos de tema e estado de conexão
-├── hooks/           Hooks de dados e controle de UI
-├── services/        Camada de acesso à API (REST e streaming SSE)
-├── stores/          Estado global com Zustand
-├── types/           Tipos e contratos de dados
-├── lib/             Funções utilitárias
-├── routes.ts        Definição declarativa das rotas
-├── App.tsx          Composição do layout e roteamento
-└── main.tsx         Ponto de entrada e providers
+├── components/      UI components
+│   ├── Screens/     Main screens (Dashboard, Wallet, AI)
+│   ├── Sections/    Content blocks (lists, chat, sidebar menu)
+│   ├── Cards/       Credential, job and wallet cards
+│   ├── Modal/       Modal dialogs (profile, credential, history)
+│   ├── Pages/       Layout structure (header, content, banners)
+│   ├── Buttons/     Standalone actions (theme, connection, avatar)
+│   ├── Icons/       SVG icons as React components
+│   └── ui/          Reusable primitives (Button, Card, Modal, etc.)
+├── context/         Theme and connection-state contexts
+├── hooks/           Data and UI-control hooks
+├── services/        API access layer (REST and SSE streaming)
+├── stores/          Global state with Zustand
+├── types/           Types and data contracts
+├── lib/             Utility functions
+├── routes.ts        Declarative route definitions
+├── App.tsx          Layout composition and routing
+└── main.tsx         Entry point and providers
 ```
 
-## Arquitetura
+## Architecture
 
-A interface é organizada em três telas, declaradas em `src/routes.ts`:
+The interface is organized into three screens, declared in `src/routes.ts`:
 
-- **Dashboard** — visão geral do perfil, estatísticas e histórico de trabalhos.
-- **Wallet** — credenciais profissionais com status (verificada, expirando,
-  expirada) e nível de confiança (alto, médio, baixo).
-- **AI Assistant** — conversa com o assistente, em destaque na navegação mobile.
+- **Dashboard** — overview of the profile, statistics and work history.
+- **Wallet** — professional credentials with status (verified, expiring, expired)
+  and trust level (high, medium, low).
+- **AI Assistant** — chat with the assistant, featured in mobile navigation.
 
-O acesso aos dados é centralizado na camada `services/`. As consultas comuns usam
-Axios sobre a API REST (`/api/profile`, `/api/credentials`, `/api/jobs`). Os
-recursos de IA usam streaming via Server-Sent Events, consumindo a resposta em
-tempo real conforme o modelo gera o texto (chat, geração de perfil e explicação do
-nível de confiança de uma credencial).
+Data access is centralized in the `services/` layer. Common queries use Axios over
+the REST API (`/api/profile`, `/api/credentials`, `/api/jobs`). The AI features use
+streaming over Server-Sent Events, consuming the response in real time as the model
+generates text (chat, profile generation, and credential trust explanations).
 
-O estado é mantido próximo de onde é usado: hooks dedicados encapsulam o
-carregamento de cada recurso, o tema e a conexão vivem em React Context, e a
-conversa do assistente fica em uma store Zustand para persistir entre as telas.
+State is kept close to where it is used: dedicated hooks encapsulate loading each
+resource, theme and connection live in React Context, and the assistant
+conversation lives in a Zustand store so it persists across screens.
 
-## Tema claro e escuro
+## Light and dark theme
 
-O tema é selecionado automaticamente a partir da preferência do sistema e pode ser
-alternado pelo usuário. A escolha é salva em `localStorage` e aplicada antes da
-renderização (script inline em `index.html`) para evitar o flash de tema incorreto.
+The theme is selected automatically from the system preference and can be toggled
+by the user. The choice is stored in `localStorage` and applied before render (an
+inline script in `index.html`) to avoid the wrong-theme flash.
 
-## Suporte offline (PWA)
+## Offline support (PWA)
 
-A aplicação é instalável e funciona offline. Os recursos estáticos são pré-cacheados
-e as respostas de `/api/profile`, `/api/credentials` e `/api/jobs` seguem a
-estratégia *stale-while-revalidate*, permitindo a consulta dos dados mesmo sem rede.
-Um indicador de conexão e um banner informam o usuário quando o backend está
-inacessível, verificando a disponibilidade através de um probe periódico à API.
+The app is installable and works offline. Static assets are precached, and the
+responses from `/api/profile`, `/api/credentials` and `/api/jobs` follow a
+stale-while-revalidate strategy, allowing the data to be read even without a
+network. A connection indicator and a banner inform the user when the backend is
+unreachable, checking availability through a periodic probe to the API.
 
-## Build de produção
+## Production build
 
 ```bash
 npm run build
 npm run preview
 ```
 
-O `build` executa a verificação de tipos antes de gerar os arquivos otimizados em
-`dist/`. O `preview` serve esse build localmente, também com proxy para a API.
+`build` runs the type check before generating the optimized files in `dist/`.
+`preview` serves that build locally, also proxying the API.
