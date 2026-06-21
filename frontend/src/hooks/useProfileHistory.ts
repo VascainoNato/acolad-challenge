@@ -7,10 +7,6 @@ import type { Job } from '../types/job'
 const ERROR_MESSAGE =
   "Sorry, I couldn't generate the summary right now. Please try again in a moment."
 
-/**
- * Drives the "Professional history" modal: builds the combined credentials+jobs
- * timeline and streams an IDA-generated summary of that history.
- */
 export function useProfileHistory(credentials: Credential[], jobs: Job[]) {
   const [isOpen, setIsOpen] = useState(false)
   const [summary, setSummary] = useState('')

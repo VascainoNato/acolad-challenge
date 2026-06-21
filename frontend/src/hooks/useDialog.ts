@@ -3,15 +3,6 @@ import { useEffect, useRef } from 'react'
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
 
-/**
- * Accessibility plumbing shared by modals and drawers:
- * - moves focus into the dialog when it opens,
- * - traps Tab inside it (wraps last → first),
- * - closes on Escape,
- * - restores focus to the previously focused element when it closes.
- *
- * Returns a ref to attach to the dialog container.
- */
 export function useDialog<T extends HTMLElement>({
   open,
   onClose,
