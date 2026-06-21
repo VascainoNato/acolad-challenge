@@ -1,0 +1,17 @@
+{
+  "name": "Maria Rossi",
+  "initials": "MR",
+  "role": "Certified Medical Interpreter",
+  "languages": ["Italian", "English"],
+  "verified": true,
+  "issuer": "European Interpreter Association",
+  "wallet": "EU citizen",
+  "walletId": "EU-IT-20240312-7741",
+  "resident": "Italy",
+  "stats": {
+    "totalJobs": 22,
+    "rating": 4.9,
+    "ratingLabel": "Excellent",
+    "memberSince": 2019
+  }
+}
